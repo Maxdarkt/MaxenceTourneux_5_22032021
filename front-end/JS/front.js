@@ -83,23 +83,31 @@ async function presentationProduit() {
     let listOfProducts = '';
 
     nounourses.forEach(nounourses =>
-        listOfProducts += `<div class="row border border-primary">
-                                        <div class="col-4 border">
-                                        <img src=${nounourses.imageUrl} class="img-fluid align-middle" />
+        listOfProducts += `<div class="row border border-primary h-100">
+                                        <div class="col-6 border d-flex justify-content-center align-items-center">
+                                        <img src=${nounourses.imageUrl} class="img-fluid" />
                                         </div>
-                                        <div class="col-2 border">
-                                        <p class="align-middle text-center">${nounourses.name}</p>
+                                        <div class="col-6 border d-flex justify-content-center align-items-center">
+                                        <p class="text-justify">${nounourses.description}</p>
                                         </div>
-                                        <div class="col-2 border">
-                                        <p>${nounourses.colors}</p>
+                                </div>
+                            <div class= "row border border-secondary h-100">
+                                        <div class="col-3 border d-flex justify-content-center align-items-center">
+                                        <p>${nounourses.name}</p>
                                         </div>
-                                        <div class="col-2 border">
-                                        <p>${nounourses.description}</p>
+                                        <div class="col-5 border d-flex justify-content-center align-items-center">
+                                        <p class="text-wrap">${nounourses.colors}</p>
                                         </div>
-                                        <div class="col-2 border">
-                                        <p>${nounourses.price}</p>
+                                        <div class="col-4 border d-flex justify-content-center align-items-center">
+                                        <p>${Number.parseFloat(nounourses.price/100).toPrecision(4)} EUR</p>
                                         </div>
-                                </div>`)
+                                </div >
+                            <div class= "row border border-tertiary h-100 mb-3">
+                                        <div class="col border d-flex justify-content-center align-items-center">
+                                        <a href="./personnalisation.html?_id=${nounourses._id}" class="btn btn-dark font-weight-bold " role="button">Commander</a>
+                                        </div>
+
+                            </div>`)
     document.getElementById('cart-prev').innerHTML = listOfProducts;
 
 }
