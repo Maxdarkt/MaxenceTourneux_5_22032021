@@ -31,6 +31,7 @@ function afficherNomDesNounours(array) {//afficher le nom des nounours
 function afficherPrixTotal(array) {//Calculer le prix total || 100 %
     for (let i = 0; i < array.length; i++) {
         prixTotal += array[i].price;
+        return prixTotal;
     }
     console.log(prixTotal);
 }
@@ -99,12 +100,12 @@ async function presentationProduit() {
                                         <p class="text-wrap">${nounourses.colors}</p>
                                         </div>
                                         <div class="col-4 border d-flex justify-content-center align-items-center">
-                                        <p>${Number.parseFloat(nounourses.price/100).toPrecision(4)} EUR</p>
+                                        <p>${(nounourses.price / 100).toFixed(2)} EUR</p>
                                         </div>
                                 </div >
                             <div class= "row border border-tertiary h-100 mb-3">
                                         <div class="col border d-flex justify-content-center align-items-center">
-                                        <a href="./personnalisation.html?_id=${nounourses._id}" class="btn btn-dark font-weight-bold " role="button">Commander</a>
+                                        <a href="./personnalisation.html?_id=${nounourses._id}" class="btn btn-dark font-weight-bold " role="button">Voir Produit</a>
                                         </div>
 
                             </div>`)
@@ -113,3 +114,4 @@ async function presentationProduit() {
 }
 
 presentationProduit();
+

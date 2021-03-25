@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="fr">
 <head>
     <meta charset="utf-8">
@@ -7,8 +7,9 @@
 
     <link rel="stylesheet" type="text/css" href="./front-end/public/css/style.css">
 
-    <script src="./front-end/JS/frontPers.js"></script>
-
+    <script defer src="./front-end/JS/frontPers.js"></script>
+    <script defer src="./front-end/JS/frontCommun.js"></script>
+    <script src="https://kit.fontawesome.com/b05a09a7bc.js" crossorigin="anonymous"></script>
     <title>Orinoco</title>
 
 </head>
@@ -24,7 +25,7 @@
                         <a class="nav-link" href="index.html">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Panier</a>
+                        <a class="nav-link" href="#" id="cart-Display"><i class="fas fa-shopping-cart"></i></a>
                     </li>
                 </ul>
             </nav>
@@ -34,34 +35,45 @@
 
         <div id="product-prev">
             <div class="row border border-primary h-100">
-                <div id="imageCustom"class="col-6 border d-flex justify-content-center align-items-center">
+                <div id="imageCustom" class="col-6 border d-flex justify-content-center align-items-center">
 
                 </div>
-                <div class="col-6 border d-flex justify-content-center align-items-center">
-                    <p id="descriptionCustom"class="text-justify"></p>
+                <div class="col-6 border d-flex justify-content-center align-items-center flex-column">
+                    <p id="nameCustom" class="d-flex justify-content-center align-items-center font-weight-bold"></p>
+                    <p id="descriptionCustom" class="text-justify"></p>
                 </div>
             </div>
             <div class="row border border-secondary h-100">
-                <div class="col-3 border d-flex justify-content-center align-items-center">
-                    <p id="nameCustom" class="d-flex justify-content-center align-items-center"></p>
+                <div class="col border d-flex justify-content-center align-items-center">
+                    <label for="priceInput">Quantite :</label><br /><input id="priceInput" placeholder="0" type="number" min="1" max="10" />
                 </div>
-                <div id="choixCouleurs" class="col-5 border d-flex justify-content-center align-items-center">
-   
+                <div id="customClient" class="col border d-flex justify-content-center align-items-center">
+
+                </div>
+
+            </div>
+            <div class="row border border-secondary h-100">
+                <div class="col-4 border d-flex justify-content-center align-items-center">
+                    <p>Total :</p>
                 </div>
                 <div class="col-4 border d-flex justify-content-center align-items-center">
-                    <p id="priceCustom" class="d-flex justify-content-center align-items-center"></p>
+                    <p id="priceCustom"></p>
+                </div>
+                <div class="col-4 border d-flex justify-content-center align-items-center">
+                    <a href="#" class="btn btn-dark font-weight-bold " role="button" id="addToCart">Ajouter au panier</a>
                 </div>
             </div>
-            ...contenu de la page...
+
+                ...contenu de la page...
+            </div>
+            <!-- Footer -->
+
+            <footer class="container bg-dark text-light">
+                Ceci est le footer
+            </footer>
+
+
         </div>
-        <!-- Footer -->
-
-        <footer class="container bg-dark text-light">
-            Ceci est le footer
-        </footer>
-
-
-    </div>
 
 
 
