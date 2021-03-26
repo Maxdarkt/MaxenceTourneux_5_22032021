@@ -54,10 +54,8 @@ displayNounours();
 
 //--------------------------Mise a jour du total-----------------------------------
 
-var inputQuantite = document.getElementById('priceInput');
+var inputQuantite = document.getElementById('qteInput');
 var priceTotal = document.getElementById('priceCustom');
-
-console.log(document.getElementById('priceInput'));
 
 inputQuantite.addEventListener('change', function (event) {
 	let total = event.target.value * nounours.price/100;
@@ -65,18 +63,25 @@ inputQuantite.addEventListener('change', function (event) {
 });
 
 
-//Test LocalStorage
+//-----------------------------Ajout du Produit au panier-----------------------------
 var addToCart = document.getElementById('addToCart');
 
 addToCart.addEventListener('click',async function (event) {
 	event.preventDefault();
-	let item = localStorage.length + 1;
-	let selectElmt = document.getElementById('choixCouleurs');
-	let customSelect = selectElmt.options[selectElmt.selectedIndex].value;
+	let qte = inputQuantite.value;
+	if (qte.match(/[0-9]/) && qte > 0 && qte < 11) { //eviter une commande forcée à 0 unité
 
-	let obj = { idOrder: item, _id: nounours._id, name: nounours.name, imageUrl: nounours.imageUrl, price: nounours.price, qte: inputQuantite.value, color: customSelect };
-	localStorage.setItem(item, JSON.stringify(obj));
+		let item = localStorage.length + 1;
+		let selectElmt = document.getElementById('choixCouleurs'); // selectionne le choix de al couleur
+		let customSelect = selectElmt.options[selectElmt.selectedIndex].value;
 
-	console.log(item);
+		let obj = { idOrder: item, _id: nounours._id, name: nounours.name, imageUrl: nounours.imageUrl, price: nounours.price, qte: inputQuantite.value, color: customSelect };
+		localStorage.setItem(item, JSON.stringify(obj));
+	}
+	else {
+		alert('Au moins 1 unite !');//Message d'erreur sur on force une commande à 0
+    }
+
+
 });
 

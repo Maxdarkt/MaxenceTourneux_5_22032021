@@ -1,6 +1,8 @@
+//---------------------Debug en manuelle si besoin--------------------//
+
+//localStorage.clear();
 
 //--------------------- Déclarations des variables --------------------//
-
 const nounourses = [];
 var prixTotal = 0;
 var alertNumberColors = true;

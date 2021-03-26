@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="fr">
 <head>
     <meta charset="utf-8">
@@ -32,31 +32,50 @@
 
         <!-- Reste de la page -->
 
-        <div id="panier-Prev">
+        <div id="panier-Prev" class="mb-5">
             <div class="row border border-primary h-100">
                 <div class="col d-flex justify-content-center align-items-center">
-                    <h2>Mon Panier</h2>
+                    <h2 class="w-75 d-flex justify-content-center align-items-center">Mon Panier</h2>
+                    <a href="#" class="btn btn-dark font-weight-bold w-25" role="button" id="clear-Cart">vider le panier</a>
                 </div>
             </div>
-            <div id="panier-List"  class="row border border-primary h-100">
+            <div id="panier-List" class="row border border-primary h-100">
 
             </div>
-            <div  class="row border border-primary h-100">
+            <div class="row border border-primary h-100">
                 <div class="col-8 d-flex justify-content-center align-items-center">
                     <p>Total :</p>
+
                 </div>
                 <div class="col-4 d-flex justify-content-center align-items-center">
                     <p id="panier-Sum"></p>
                 </div>
             </div>
-
-
-
-            ...contenu de la page...
         </div>
-        <div>
-            <a href="#" class="btn btn-dark font-weight-bold " role="button" id="clear-Cart">vider le panier</a>    
-        </div>        <!-- Footer -->
+        <div id="form_Cart" class="mb-5">
+            <h2>Formulaire de contact</h2>
+            <form method="post" action="">
+                <fieldset>
+                    <legend>Identité :</legend>
+                    <label for="form-Name">Prenom:</label><input type="text" id="form-Name" minlength="2" maxlength="20" required/><br />
+                    <label for="form-Lastname">Nom :</label><input type="text" id="form-Lastname" minlength="2" maxlength="20" required /><br />
+                    <label for="form-Email">E-mail :</label><input type="email" id="form-Email" required /><br />
+                    <label for="form-EmailConf">Confirmation de l'e-mail :</label><input type="email" id="form-EmailConf" required /><br />
+                    <label for="form-Tel">N° Telephone :</label><input type="tel" id="form-Tel" required />
+                </fieldset>
+                <fieldset>
+                    <legend>Adresse de livraison :</legend>
+                    <label for="form-Rue">rue :</label><input type="text" id="form-Rue" required /><br />
+                    <label for="form-Compl">Complement d'adresse :</label><input type="text" id="form-Compl" required /><br />
+                    <label for="form-Postal">Code Postal :</label><input type="text" id="form-Postal" required /><br />
+                    <label for="form-Ville">Ville :</label><input type="text" id="form-Ville" required /><br />
+                </fieldset>
+                <input type="submit" value="Valider la commande" class="btn btn-dark font-weight-bold" onclick="validateCart(event)" />
+            </form>
+                
+
+        </div>
+     <!-- Footer -->
 
         <footer class="container bg-dark text-light">
             Ceci est le footer
