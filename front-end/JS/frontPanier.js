@@ -9,9 +9,9 @@ var sumCart = 0;
 
 for (let i = 1; i < localStorage.length+1; i++) {
 
-
+    
     orderCart = JSON.parse(localStorage.getItem(i));
-
+    
     console.log(orderCart);
 
         panierHTML += `  <div class="row border border-primary h-100">
@@ -37,7 +37,7 @@ document.getElementById('panier-List').innerHTML = panierHTML;
 document.getElementById('panier-Sum').innerHTML = sumCart.toFixed(2) + ' EUR ';
 
 
-//-----------------Déclaration requête
+//-----------------Dï¿½claration requï¿½te
 
 function majCart(order,ID) {
     let response = JSON.parse(localStorage.getItem(order));
@@ -99,7 +99,7 @@ function validateCart(event) {
     let regexNom = /^[a-zA-z]{2,20}$/;
     let regexEmail = /[\w.-]+@[\w-]+\.\w{3,6}/;
     let regexTel = /^[0-9]{10}$/;
-    let regexText = /[0-9a-zA-Z éèàô'çù-]{5,50}$/;
+    let regexText = /[0-9a-zA-Z ï¿½ï¿½ï¿½ï¿½'ï¿½ï¿½-]{5,50}$/;
     let regexPostal = /^[0-9]{5}$/g;
 
 

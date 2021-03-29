@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\back-end",
+    "\\front-end",
+    "\\front-end\\JS",
+    "\\front-end\\sass",
+    "\\front-end\\sass\\base",
+    "\\front-end\\sass\\components",
+    "\\front-end\\sass\\layout",
+    "\\front-end\\sass\\pages",
+    "\\front-end\\sass\\utils"
+  ],
+  "SelectedNode": "\\front-end\\sass\\main.scss",
+  "PreviewInSolutionExplorer": false
+}
