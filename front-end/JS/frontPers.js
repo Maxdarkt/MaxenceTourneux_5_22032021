@@ -1,35 +1,24 @@
-//-------------------------Récupérer l'ID de l'URL
-function $_GET(param) {
-	var vars = [];
-	window.location.href.replace(location.hash, '').replace(
-		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-		function (m, key, value) { // callback
-			vars[key] = value !== undefined ? value : '';
-		}
-	);
+//-------------------------Recuperer l'ID de l'URL
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const ID = urlParams.get('_id');
 
-	if (param) {
-		return vars[param] ? vars[param] : null;
-	}
-	return vars;
-}
-
-var ID = $_GET();
-console.log(ID._id);
-
+//-------------------------DÃ©claration de l'array nounours
 var nounours = [];
 
-async function fillProductsID() { // Requete des objets Teddies
-	await fetch("http://localhost:3000/api/teddies/" + ID._id)
+//-------------------------DÃ©claration des fonctions-------------------------//
+
+//---Requete pour recuperer les infos du nounours en fonction de l'ID
+async function findNounoursWithID() { // Requete des objets Teddies
+	await fetch("http://localhost:3000/api/teddies/" + ID)
 		.then((response) => response.json())
-		.then(_data => { nounours = _data; }) // Rempli l'array avec toutes les infos du serveur
+		.then(dataServer => { nounours = dataServer; }) // Rempli l'array avec toutes les infos du serveur
 		.catch(error => { console.error(error);})
 };
 
-
+//---Fonction pour afficher le produit sÃ©lectionnÃ©
 async function displayNounours() {
-	await fillProductsID();
-	console.log(nounours.colors);
+	await findNounoursWithID();
 
 	let colorsTeddy = '';
 	for (let element of nounours.colors) {
@@ -47,12 +36,14 @@ async function displayNounours() {
 	document.getElementById('priceCustom').innerHTML = (nounours.price / 100).toFixed(2) + ' EUR';
 }
 
+//---------------Lancement de la fonction au chargement de la page----------------//
+
 displayNounours();
 
 
-//Interaction client
+//----------------------------------Interaction client---------------------------//
 
-//--------------------------Mise a jour du total-----------------------------------
+//---Mise a jour du total
 
 var inputQuantite = document.getElementById('qteInput');
 var priceTotal = document.getElementById('priceCustom');
@@ -63,25 +54,23 @@ inputQuantite.addEventListener('change', function (event) {
 });
 
 
-//-----------------------------Ajout du Produit au panier-----------------------------
+//---Ajout du Produit au panier
 var addToCart = document.getElementById('addToCart');
 
 addToCart.addEventListener('click',async function (event) {
 	event.preventDefault();
 	let qte = inputQuantite.value;
-	if (qte.match(/[0-9]/) && qte > 0 && qte < 11) { //eviter une commande forcée à 0 unité
+	if (qte.match(/[0-9]/) && qte > 0 && qte < 11) { //eviter une commande forcÃ©e Ã  0 unitÃ©
 
 		let item = localStorage.length + 1;
-		let selectElmt = document.getElementById('choixCouleurs'); // selectionne le choix de al couleur
+		let selectElmt = document.getElementById('choixCouleurs'); // selectionne le choix de la couleur
 		let customSelect = selectElmt.options[selectElmt.selectedIndex].value;
 
 		let obj = { idOrder: item, _id: nounours._id, name: nounours.name, imageUrl: nounours.imageUrl, price: nounours.price, qte: inputQuantite.value, color: customSelect };
 		localStorage.setItem(item, JSON.stringify(obj));
 	}
 	else {
-		alert('Au moins 1 unite !');//Message d'erreur sur on force une commande à 0
+		alert('Veuillez sÃ©lectionner au moins 1 unite !');//Message d'erreur si on force une commande Ã  0
     }
-
-
 });
 

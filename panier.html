@@ -17,18 +17,18 @@
 
 </head>
 <body>
-    <div class="container border">
+    <div class="container">
 
         <!-- Header -->
-        <header>
-            <nav class="navbar navbar-expand bg-light d-flex justify-content-between">
-                <a class="navbar-brand" href="index.html"><img src="./back-end/images/Logo/Logo.png" alt="Logo Oticono" height="40" /></a>
+        <header class="bg-dark">
+            <nav class="navbar navbar-expand d-flex justify-content-between">
+                <a class="navbar-brand text-light" href="index.html"><i class="fas fa-home fa-lg"></i> Orinoco</a>
                 <ul class="navbar-nav ">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Accueil</a>
+                    <li class="nav-item" >
+                        <a class="nav-link text-light" href="#">Contact</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="panier.html" id="cart-Display"><i class="fas fa-shopping-cart"></i></a>
+                    <li class="nav-item" >
+                        <a class="nav-link text-light" href="#" id="cart-Display"><i class="fas fa-shopping-cart fa-lg"></i></a>
                     </li>
                 </ul>
             </nav>
@@ -37,17 +37,17 @@
         <!-- Reste de la page -->
 
         <div id="panier-Prev" class="mb-5">
-            <div class="row border border-primary h-100">
+            <div class="row h-100">
                 <div class="col d-flex justify-content-center align-items-center">
                     <h2 class="w-75 d-flex justify-content-center align-items-center">Mon Panier</h2>
                     <a href="#" class="btn btn-dark font-weight-bold w-25" role="button" id="clear-Cart">vider le panier</a>
                 </div>
             </div>
-            <div id="panier-List" class="row border border-primary h-100">
+            <div id="panier-List" class="row h-100 d-flex flex-column justify-content-center align-items-center">
 
             </div>
-            <div class="row border border-primary h-100">
-                <div class="col-8 d-flex justify-content-center align-items-center">
+            <div class="row h-100">
+                <div class="col-8 d-flex justify-content-end align-items-center">
                     <p>Total :</p>
 
                 </div>
@@ -59,30 +59,68 @@
         <div id="form_Cart" class="mb-5">
             <h2>Formulaire de contact</h2>
             <form method="post" action="">
-                <fieldset>
-                    <legend>Identité :</legend>
-                    <label for="form-Name">Prenom:</label><input type="text" id="form-Name" minlength="2" maxlength="20" required/><br />
-                    <label for="form-Lastname">Nom :</label><input type="text" id="form-Lastname" minlength="2" maxlength="20" required /><br />
-                    <label for="form-Email">E-mail :</label><input type="email" id="form-Email" required /><br />
-                    <label for="form-EmailConf">Confirmation de l'e-mail :</label><input type="email" id="form-EmailConf" required /><br />
-                    <label for="form-Tel">N° Telephone :</label><input type="tel" id="form-Tel" required />
-                </fieldset>
-                <fieldset>
-                    <legend>Adresse de livraison :</legend>
-                    <label for="form-Rue">rue :</label><input type="text" id="form-Rue" required /><br />
-                    <label for="form-Compl">Complement d'adresse :</label><input type="text" id="form-Compl" required /><br />
-                    <label for="form-Postal">Code Postal :</label><input type="text" id="form-Postal" required /><br />
-                    <label for="form-Ville">Ville :</label><input type="text" id="form-Ville" required /><br />
-                </fieldset>
-                <input type="submit" value="Valider la commande" class="btn btn-dark font-weight-bold" onclick="validateCart(event)" />
+                <table class="table">
+                    <fieldset>
+                    <thead>
+                        <tr scope="row">
+                            <td colspan="2"><legend>Identité :</legend></td>
+                        </tr>
+                    </thead>
+                        <tr>
+                            <td><label for="form-Name">Prenom:</label></td>
+                            <td><input type="text" id="form-Name" minlength="2" maxlength="20" required/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="form-Lastname">Nom :</label></td>
+                            <td><input type="text" id="form-Lastname" minlength="2" maxlength="20" required /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="form-Email">E-mail :</label></td>
+                            <td><input type="email" id="form-Email" required /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="form-EmailConf">Confirmation de l'e-mail :</label></td>
+                            <td><input type="email" id="form-EmailConf" required /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="form-Tel">N° Telephone :</label></td>
+                            <td><input type="tel" id="form-Tel" required /></td>
+                        </tr>    
+                    </fieldset>
+                    <fieldset>
+                        <thead><tr>
+                            <td colspan="2"><legend>Adresse de livraison :</legend></td>
+                        </tr></thead>
+                        <tr>
+                            <td><label for="form-Rue">rue :</label></td>
+                            <td><input type="text" id="form-Rue" required /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="form-Compl">Complement d'adresse :</label></td>
+                            <td><input type="text" id="form-Compl" required /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="form-Postal">Code Postal :</label></td>
+                            <td><input type="text" id="form-Postal" required /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="form-Ville">Ville :</label></td>
+                            <td><input type="text" id="form-Ville" required /></td>
+                        </tr>
+                    </fieldset>
+                        <tr>
+                            <td colspan="2"><input type="submit" value="Valider la commande" class="btn btn-dark font-weight-bold" onclick="validateCart(event)" /></td>
+                        </tr>
+                </table>
             </form>
-                
-
         </div>
-     <!-- Footer -->
-
-        <footer class="container bg-dark text-light">
-            Ceci est le footer
+        <!-- Footer -->
+        <footer class="container d-flex justify-content-center">
+            <p class="w-25 d-flex justify-content-around">
+                <a href="" class="text-dark"><i class="fab fa-twitter fa-2x"></i></a>
+                <a href="" class="text-dark"><i class="fab fa-facebook-square fa-2x"></i></a>   
+                <a href="" class="text-dark"><i class="fab fa-instagram-square fa-2x"></i></a>
+            </p>
         </footer>
 
 

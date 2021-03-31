@@ -1,0 +1,13 @@
+#container-personnalisation {
+    min-height : 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#product-prev{
+min-height : 83vh;
+}
+
+footer{
+    align-self: flex-end;
+}

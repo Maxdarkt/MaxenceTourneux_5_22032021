@@ -1,119 +1,105 @@
 //---------------------Debug en manuelle si besoin--------------------//
 
-//localStorage.clear();
+//localStorage.clear(); //Vide le panier manuellement 
 
-//--------------------- Déclarations des variables --------------------//
+//--------------------- Declarations des variables --------------------//
 const nounourses = [];
-var prixTotal = 0;
-var alertNumberColors = true;
+var priceNounoursTo100 = "";
+var priceNounoursLess50 = "";
+var priceNounoursMLess20 = "";
 
-//--------------------- Déclarations des fonctions | --------------------//
+var totalPrice = 0;
 
-function addTenToAge(age) {
+//--------------------- Declarations des fonctions | --------------------//
+
+function addTenToAge(age) { // Ajoute 10 Ã  l'age envoyÃ© en argument
     return age + 10;
 }
 
-function afficherColorsisDisponibles(name, colors) {//Afficher les couleurs disponibles en fonction du nom envoyé
+function displayColorsAvailable(name, colors) {//Afficher les couleurs disponibles en fonction du nom envoyes
     for (let element of colors) {
-        console.log(element);
+        //console.log(element);
     }
     if (colors.length < 3) {
-        alertNumberColors = false;
-        console.log(name +" ne possede pas de troisieme couleur");
+        //console.log(name +" ne possede pas de troisieme couleur");
     }
 }
 
-function afficherNomDesNounours(array) {//afficher le nom des nounours
+function displayNameTeddies(array) {//afficher le nom des nounours
     for (let i = 0; i < array.length; i++) {
-        console.log(array[i].name);
-        afficherColorsisDisponibles(array[i].name, array[i].colors)
+        displayColorsAvailable(array[i].name, array[i].colors) 
     }
 }
 
-function afficherPrixTotal(array) {//Calculer le prix total || 100 %
+function displayTotalPrice(array) {//Calculer le prix total || 100 %
     for (let i = 0; i < array.length; i++) {
-        prixTotal += array[i].price;
-        return prixTotal;
+        totalPrice += array[i].price;
+        return totalPrice;
     }
-    console.log(prixTotal);
 }
 
-function afficherMoitierPrix(array) {//Afficher le prix de chaque teddy
+function displayHalfPrice(array) {//Afficher le prix de chaque teddy
     for (let i = 0; i < array.length; i++) {
-        console.log("Le prix de " + array[i].name + " est a " + array[i].price);// Prix à 100 %
-        console.log("Le prix de " + array[i].name + " a -20% est a " + array[i].price * 0.8);// Prix à -20 %
-        console.log("Le prix de " + array[i].name + " a -50% est a " + array[i].price * 0.5);// Prix à -50 %
+        priceNounoursTo100 = "Le prix de " + array[i].name + " est a " + array[i].price;
+        priceNounoursLess50 = "Le prix de " + array[i].name + " a -20% est a " + array[i].price * 0.8;
+        priceNounoursMLess20 = "Le prix de " + array[i].name + " a -50% est a " + array[i].price * 0.5;
     }
 }
 
-
-
-function fillListProducts(array) { // on récupère toutes les infos du serveur sous forme d'array dans la const nournourses []
+function fillArrayNounourses(array) { // on recupere toutes les infos du serveur sous forme d'array dans la const nournourses []
     for (let element of array) {
        nounourses.push(element)    
     }
-    console.log(nounourses);
-    afficherNomDesNounours(nounourses);
-    afficherPrixTotal(nounourses);
-    afficherMoitierPrix(nounourses);
-
+    displayNameTeddies(nounourses);
+    displayTotalPrice(nounourses);
+    displayHalfPrice(nounourses);
 };
 
-//--------------------- Requete pour récupérer kes informations des Teddies --------------------//
+//--------------------- Requete pour recuperer les informations des Teddies --------------------//
 
-async function fillProducts() { // Requete des objets Teddies
+async function productRequest() { // Requete des objets Teddies
     await fetch('http://localhost:3000/api/teddies')
         .then((response) => response.json())
-        .then((nounours) => fillListProducts(nounours)) // Rempli l'array avec toutes les infos du serveur
+        .then((nounours) => fillArrayNounourses(nounours)) // On remplit l'array avec toutes les infos du serveur
 };
-
-
-//-------------------Lancement fonction -------------------------------//
-
-
-
 
 //--------------------Modif DOM-----------------------------------------//
 
 var cartPrev = document.getElementsByClassName('cart-prev');
 
-//if (nounourses.lenght) {}
-
-async function presentationProduit() {
-    await fillProducts();
-    console.log(nounourses.length);
+async function displayListProducts() {
+    await productRequest();
 
     let listOfProducts = '';
 
     nounourses.forEach(nounourses =>
-        listOfProducts += `<div class="row border border-primary h-100">
-                                        <div class="col-6 border d-flex justify-content-center align-items-center">
-                                        <img src=${nounourses.imageUrl} class="img-fluid" />
+        listOfProducts += `<div class="mb-3 bg-light">
+                                <div class="row h-100">
+                                        <div class="col-6 d-flex justify-content-center align-items-center">
+                                            <img src=${nounourses.imageUrl} class="img-fluid" />
                                         </div>
-                                        <div class="col-6 border d-flex justify-content-center align-items-center">
-                                        <p class="text-justify">${nounourses.description}</p>
+                                        <div class="col-6 d-flex flex-column justify-content-around align-items-center">
+                                            <p class="text-justify">${nounourses.description}</p>
+                                            <p class="text-wrap"><strong>Couleurs disponibles :</strong><br/>${nounourses.colors}</p>
+                                            <a href="./personnalisation.html?_id=${nounourses._id}" class="btn btn-dark font-weight-bold" role="button">Voir Produit</a>
                                         </div>
                                 </div>
-                            <div class= "row border border-secondary h-100">
-                                        <div class="col-3 border d-flex justify-content-center align-items-center">
-                                        <p>${nounourses.name}</p>
+                                <div class= "row h-100">
+                                        <div class="col d-flex justify-content-center align-items-center">
+                                            <p><strong>${nounourses.name}</strong></p>
                                         </div>
-                                        <div class="col-5 border d-flex justify-content-center align-items-center">
-                                        <p class="text-wrap">${nounourses.colors}</p>
-                                        </div>
-                                        <div class="col-4 border d-flex justify-content-center align-items-center">
-                                        <p>${(nounourses.price / 100).toFixed(2)} EUR</p>
+                                        <div class="col d-flex justify-content-center align-items-center">
+                                            <p><strong>${(nounourses.price / 100).toFixed(2)} EUR
+                                            </strong></p>
                                         </div>
                                 </div >
-                            <div class= "row border border-tertiary h-100 mb-3">
-                                        <div class="col border d-flex justify-content-center align-items-center">
-                                        <a href="./personnalisation.html?_id=${nounourses._id}" class="btn btn-dark font-weight-bold " role="button">Voir Produit</a>
-                                        </div>
-
-                            </div>`)
+                        </div>`)
     document.getElementById('cart-prev').innerHTML = listOfProducts;
 
 }
 
-presentationProduit();
+//-------------------Lancement de la fonction au chargement de la page -------------------------------//
+
+displayListProducts();
+
 

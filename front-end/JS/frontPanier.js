@@ -1,8 +1,6 @@
 
 //-------------------VERIFICATION PANIER----------------------
 
-console.log(localStorage.length);
-
 var panierHTML = "";
 var orderCart = [];
 var sumCart = 0;
@@ -14,20 +12,21 @@ for (let i = 1; i < localStorage.length+1; i++) {
     
     console.log(orderCart);
 
-        panierHTML += `  <div class="row border border-primary h-100">
-                        <div class="col-3 d-flex justify-content-center align-items-center">
-                            <img src="${orderCart.imageUrl}" class="img-fluid"/>
+    panierHTML += ` <div class="row bg-light h-100">
+                            <div class="col-3 d-flex justify-content-center align-items-center">
+                                <img src="${orderCart.imageUrl}" class="img-fluid"/>
+                            </div>
+                            <div class="col-6">
+                                <p>${orderCart.name}</p>
+                                <p>${orderCart.color}</p>
+                                <label for="qteCart${i}">Quantite :</label><input onChange="majCart('${i}','${orderCart._id}')" id="qteCart${i}" value="${orderCart.qte}" type="number" min="1" max="10" />
+                            </div>
+                            <div class="col-3">
+                                <p id="price${i}">${(orderCart.price / 100).toFixed(2) + ' EUR'}</p>
+                                <a href="#" class="btn btn-dark font-weight-bold " role="button" onClick="removeToCart(${i})">Supprimer</a>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <p>${orderCart.name}</p>
-                            <p>${orderCart.color}</p>
-                            <label for="qteCart${i}">Quantite :</label><input onChange="majCart('${i}','${orderCart._id}')" id="qteCart${i}" value="${orderCart.qte}" type="number" min="1" max="10" />
-                        </div>
-                        <div class="col-3">
-                            <p id="price${i}">${(orderCart.price / 100).toFixed(2) + ' EUR'}</p>
-                            <a href="#" class="btn btn-dark font-weight-bold " role="button" onClick="removeToCart(${i})">Supprimer</a>
-                        </div>
-                    </div>`;
+                        <div class="border-bottom my-2 w-75"></div>`;
 
     sumCart += orderCart.qte * orderCart.price / 100;
  
