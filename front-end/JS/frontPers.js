@@ -3,10 +3,7 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const ID = urlParams.get('_id');
 
-//-------------------------Déclaration de l'array nounours
-var nounours = [];
-
-//-------------------------Déclaration des fonctions-------------------------//
+//----------------- PARTIE 1 : AFFICHAGE PRODUIT SELECTIONNE -------------------------//
 
 //---Requete pour recuperer les infos du nounours en fonction de l'ID
 async function findNounoursWithID() { // Requete des objets Teddies
@@ -41,7 +38,8 @@ async function displayNounours() {
 displayNounours();
 
 
-//----------------------------------Interaction client---------------------------//
+//----------------- PARTIE 2 : ENVOI DE LA SELECTION AU PANIER  -------------------------//
+	//----------------------------------Interaction client---------------------------//
 
 //---Mise a jour du total
 
@@ -53,6 +51,7 @@ inputQuantite.addEventListener('change', function (event) {
 	priceTotal.innerHTML = total.toFixed(2) +' EUR';
 });
 
+var sendOrderNew =[];
 
 //---Ajout du Produit au panier
 var addToCart = document.getElementById('addToCart');
@@ -60,14 +59,68 @@ var addToCart = document.getElementById('addToCart');
 addToCart.addEventListener('click',async function (event) {
 	event.preventDefault();
 	let qte = inputQuantite.value;
+	let orderInCart = [];
+	let obj = {};
 	if (qte.match(/[0-9]/) && qte > 0 && qte < 11) { //eviter une commande forcée à 0 unité
-
-		let item = localStorage.length + 1;
+		
 		let selectElmt = document.getElementById('choixCouleurs'); // selectionne le choix de la couleur
-		let customSelect = selectElmt.options[selectElmt.selectedIndex].value;
+		let customSelect = selectElmt.options[selectElmt.selectedIndex].value; // selectionne la quantite
 
-		let obj = { idOrder: item, _id: nounours._id, name: nounours.name, imageUrl: nounours.imageUrl, price: nounours.price, qte: inputQuantite.value, color: customSelect };
-		localStorage.setItem(item, JSON.stringify(obj));
+		let reqOrderExist =[];
+		let newEntries = ""; 
+		let newQuantity = 0;
+		let checkColorExist = false;
+		let checkColorIndex = 0;
+
+		if (localStorage.getItem(ID)){ //Si le panier contient déjà un article du même ID
+
+			reqOrderExist = JSON.parse(localStorage.getItem(ID)); //Charge l'array avec la dernireè entrée (BUG!!!!!!)
+			let numberArray = JSON.parse(localStorage.getItem(ID)).length;
+			console.log(JSON.parse(localStorage.getItem(ID)));
+			console.log(numberArray);
+			orderInCart = reqOrderExist;// on récupère l'array avec toutes les commandes pour cet ID
+
+		
+				for (let i in reqOrderExist) {//On vérifie si une couleur existe déjà dans tout le Array
+
+					console.log(reqOrderExist[i]);
+	
+					if(reqOrderExist[i].colors == customSelect){ // Si une couleure existe alors on renvoie true avec l'index du array
+						checkColorExist = true;
+						checkColorIndex = i;
+
+						//console.log(reqOrderExist[i].colors);
+					}
+				}
+				if(checkColorExist === true){ // On modifie le champ de la couleur
+
+
+					newQuantity = parseInt(qte) + parseInt(reqOrderExist[checkColorIndex].quantity);
+				
+					newEntries = {colors: reqOrderExist[checkColorIndex].colors, quantity : newQuantity}; //On modifie la commande existante
+
+					orderInCart[checkColorIndex] = newEntries; 
+
+					localStorage.setItem(ID, JSON.stringify(orderInCart)); //On envoie au panier
+
+					//console.log('Même couleure : '+ reqOrderExist[checkColorIndex].colors, newQuantity, customSelect );
+					
+				}
+				else{ // Si chekColor === false alors la couleur n'existe pas dans le array
+					orderInCart.push({colors: customSelect, quantity : qte}); //On ajoute à l'array toutes les commandes
+					localStorage.setItem(ID, JSON.stringify(orderInCart)); //On envoie au panier
+
+					//console.log('ajout nouvelle couleur : '+ reqOrderExist[checkColorIndex].colors, qte, customSelect);
+				}			
+			
+		}
+		else{
+			orderInCart.push({colors: customSelect, quantity : qte}); //On ajoute à l'array toutes les commandes
+			localStorage.setItem(ID, JSON.stringify(orderInCart)); //On envoie au panier
+
+			//console.log('Initialisation : '+ customSelect, qte);
+		}
+		
 	}
 	else {
 		alert('Veuillez sélectionner au moins 1 unite !');//Message d'erreur si on force une commande à 0

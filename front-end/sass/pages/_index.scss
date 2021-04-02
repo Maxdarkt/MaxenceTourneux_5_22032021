@@ -1,3 +1,16 @@
+//-----------Page index------------------
+.height-row-index{
+max-height : 300px;
+min-height : 150px;
+border-radius : 25px;
+    img{
+        max-height : 200px;
+        width:auto;
+        border-radius: 25px;
+    }
+}
+
+//-------------Page Personnalisation-------------
 #container-personnalisation {
     min-height : 100vh;
     display: flex;
@@ -6,8 +19,25 @@
 
 #product-prev{
 min-height : 83vh;
+    & > div:first-child{
+        border-radius : 25px;
+    }
+    img{
+        border-radius : 25px;
+    }
 }
 
+//-------------------Page panier------------
+#panier-List{
+    & > div:first-child{
+        border-radius : 25px;
+    }
+    img{
+        border-radius : 25px;
+    }
+}
+
+//---------------Commun--------------------
 footer{
     align-self: flex-end;
 }

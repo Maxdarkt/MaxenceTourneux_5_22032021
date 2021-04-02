@@ -14,6 +14,18 @@ header {
   align-items: center;
 }
 
+.height-row-index {
+  max-height: 300px;
+  min-height: 150px;
+  border-radius: 25px;
+}
+
+.height-row-index img {
+  max-height: 200px;
+  width: auto;
+  border-radius: 25px;
+}
+
 #container-personnalisation {
   min-height: 100vh;
   display: flex;
@@ -22,6 +34,22 @@ header {
 
 #product-prev {
   min-height: 83vh;
+}
+
+#product-prev > div:first-child {
+  border-radius: 25px;
+}
+
+#product-prev img {
+  border-radius: 25px;
+}
+
+#panier-List > div:first-child {
+  border-radius: 25px;
+}
+
+#panier-List img {
+  border-radius: 25px;
 }
 
 footer {
