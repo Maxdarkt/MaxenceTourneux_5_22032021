@@ -1,11 +1,3 @@
-//---------------------Debug en manuelle si besoin--------------------//
-
-//localStorage.clear(); //Vide le panier manuellement 
-
-//--------------------- Declarations des variables --------------------//
-
-
-
 //--------------------Modif DOM-----------------------------------------//
 
 var cartPrev = document.getElementsByClassName('cart-prev');

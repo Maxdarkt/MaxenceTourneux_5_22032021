@@ -1,5 +1,8 @@
-//-------------------VERIFICATION PANIER----------------------
+//-------------------VERIFICATION PANIER: pour éviter les bugs avec la touche précédente du navigateur
+urlRedirection = "./index.html";
+checkCart(urlRedirection);
 
+//------------------Affichage du panier-----------------------
 var panierHTML = "";
 var orderCart = [];
 var sumCart = 0;
@@ -102,7 +105,6 @@ function removeToCart(j, indexArray, ID, color) {//Supprimer un produit du panie
                 newOrderAfterDeleteOne.push(ordersLocal[element]);//on créé un nouvel array provisoire
             }
         }
-        console.log(newOrderAfterDeleteOne);
         localStorage.setItem(ID, JSON.stringify(newOrderAfterDeleteOne));//on remet à jour le localStorage en ayant supprimé l'indice sélectionné
 
         document.location.href = "./panier.html";//On recharge la page
@@ -125,37 +127,71 @@ clearCart.addEventListener('click', function (event) {
 
 //--------------Validation de la commande-----------------
 
-function validateCart(event) {
-    event.preventDefault();
-    let formName = document.getElementById('form-Name').value;
-    let formLastName = document.getElementById('form-Lastname').value;
-    let formEmail = document.getElementById('form-Email').value;
-    let formEmailConf = document.getElementById('form-EmailConf').value;
-    let formTel = document.getElementById('form-Tel').value;
+//Poratbilité des variables
+    let formName = "";
+    let formLastName = "";
+    let formEmail = "";
+    let formEmailConf = "";
+    let formTel = 0;
 
-    let formRue = document.getElementById('form-Rue').value;
-    let formCompl = document.getElementById('form-Compl').value;
-    let formPostal = document.getElementById('form-Postal').value;
-    let formVille = document.getElementById('form-Ville').value;
+    let formRue = "";
+    let formCompl = "" ;
+    let formPostal = 0;
+    let formVille = "";
+
+//--Vérification dui formulaire : REGEX
+function checkForm(){
+    formName = document.getElementById('form-Name').value;
+    formLastName = document.getElementById('form-Lastname').value;
+    formEmail = document.getElementById('form-Email').value;
+    formEmailConf = document.getElementById('form-EmailConf').value;
+    formTel = document.getElementById('form-Tel').value;
+
+    formRue = document.getElementById('form-Rue').value;
+    formCompl = document.getElementById('form-Compl').value;
+    formPostal = document.getElementById('form-Postal').value;
+    formVille = document.getElementById('form-Ville').value;
 
     let regexNom = /^[a-zA-z]{2,20}$/;
     let regexEmail = /[\w.-]+@[\w-]+\.\w{3,6}/;
     let regexTel = /^[0-9]{10}$/;
-    let regexText = /[0-9a-zA-Z ����'��-]{5,50}$/;
-    let regexPostal = /^[0-9]{5}$/g;
+    let regexText = /[0-9a-zA-Z éèêàêôûùïî-]{5,50}$/;
+    let regexVille = /[0-9a-zA-Z éèêàêôûùïî-]{2,50}$/;
+    let regexCompl = /[0-9a-zA-Z éèêàêôûùïî-]{0,50}$/;
+    let regexPostal = /^[0-9]{5}$/;
 
+    if (regexNom.test(formName) && regexNom.test(formLastName) && regexEmail.test(formEmail) && regexTel.test(formTel) && regexText.test(formRue) && regexPostal.test(formPostal) && regexCompl.test(formCompl) && regexVille.test(formVille)  ) {
 
-   // console.log(regexPostal.test(formPostal));
+        if(formEmail === formEmailConf){
 
-    if (regexNom.test(formName) && regexNom.test(formLastName) && regexEmail.test(formEmail)) {
-        console.log('pseudo : OK');
+            return true;
+
+        }else{
+            alert(`l'adresse mail ne correspond pas !`);
+            return false;
+        }
+
     }
     else {
-        console.log('pseudo : NO');
+        alert(`Le formulaire présente une erreure !`);
+        return false;
     }
-};
+}
 
-/*
-(   && regexTel.test(formTel) && regexText.test(formRue)
-    && regexText.test(formCompl) && regexText.test(formVille) && regexPostal.test(formPostal)
-*/
+function validateCart(event) {
+    event.preventDefault();
+
+    let checkFormVar = checkForm();
+
+    if (checkFormVar) {//Si la fonction a renvoyé = true
+        //création d'un objet
+        let customerDetails = {name : formName, lastname : formLastName, email : formEmail, tel : formTel, rue : formRue, compl : formCompl, postal : formPostal, ville : formVille};
+
+        let idOrder = Date.now();//création d'un id de commande unique
+
+        localStorage.setItem(idOrder, JSON.stringify(customerDetails));//envoie au local Storage
+
+        document.location.href = "./commande.html?_id=" +idOrder ;
+    }
+    
+};

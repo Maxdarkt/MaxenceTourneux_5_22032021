@@ -1,12 +1,15 @@
 //--------------------- Declarations des variables --------------------//
 var nounours = [];
 const nounourses = [];
+var urlRedirection = "";
 
 var priceNounoursTo100 = "";
 var priceNounoursLess50 = "";
 var priceNounoursMLess20 = "";
 
 var totalPrice = 0;
+
+var urlRedirection = "";
 
 //------------Verification panier plein ou vide pour aller sur la page panier
 
@@ -23,6 +26,11 @@ goToCart.addEventListener('click', function (event) {
 });
 
 //--------------------- Declarations des fonctions | --------------------//
+function checkCart(url){
+    if (localStorage.length == 0) {
+        document.location.href = url;
+    }
+}
 
 function addTenToAge(age) { // Ajoute 10 à l'age envoyé en argument
     return age + 10;

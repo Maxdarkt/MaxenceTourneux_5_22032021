@@ -52,6 +52,18 @@ header {
   border-radius: 25px;
 }
 
+#order-prev {
+  min-height: 83vh;
+}
+
+#order-prev div {
+  border-radius: 25px;
+}
+
+#order-prev img {
+  border-radius: 25px;
+}
+
 footer {
   align-self: flex-end;
 }
