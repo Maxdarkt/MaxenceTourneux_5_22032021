@@ -13,7 +13,7 @@ async function displayCart(){
     await productRequest(); //Renvoie la requete de toutes les infos des produits dans la BBD dans nounourses
 
         for (let i in nounourses){ //parcourt chaque array de la BDD et renvoie les valeurs dans éléments
-            //console.log(nounourses[i]);
+
             if(localStorage.getItem(nounourses[i]._id)){ //On vérifie l'existance de commandes pour chaque produit de la BDD
                 indexArray = 0;
                 orderCart = JSON.parse(localStorage.getItem(nounourses[i]._id)); // On récupère le localStorage en fonction de l'ID
@@ -91,14 +91,12 @@ function removeToCart(j, indexArray, ID, color) {//Supprimer un produit du panie
     if(ordersLocal.length == 1){//si localStorage contient 1 seule entrée
 
         localStorage.removeItem(ID); //on supprime le localStorage complètement
-        console.log(`l'entrée suivante ${ID} a été supprimée`)
 
         checkLocalStorage();
     }
     else if(ordersLocal.length > 1){//si localStorage contient plusieurs entrées
         let newOrderAfterDeleteOne = [];
         for (let element of Object.keys(ordersLocal)){//On récupère l'index pour comparer :
-                //console.log(element == indexArray);
 
             if (element != indexArray){ //On boucle tous les indices sauf celui à supprimer
 

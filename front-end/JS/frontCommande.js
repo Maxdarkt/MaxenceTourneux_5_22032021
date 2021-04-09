@@ -56,7 +56,7 @@ async function displayProductsOrder(){
     await productRequest(); //Renvoie la requete de toutes les infos des produits dans la BBD dans nounourses
 
         for (let i in nounourses){ //parcourt chaque array de la BDD et renvoie les valeurs dans éléments
-            //console.log(nounourses[i]);
+
             if(localStorage.getItem(nounourses[i]._id)){ //On vérifie l'existance de commandes pour chaque produit de la BDD
                 indexArray = 0;
                 orderCart = JSON.parse(localStorage.getItem(nounourses[i]._id)); // On récupère le localStorage en fonction de l'ID

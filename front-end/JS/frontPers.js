@@ -76,20 +76,15 @@ addToCart.addEventListener('click',async function (event) {
 
 			reqOrderExist = JSON.parse(localStorage.getItem(ID)); //Charge l'array avec la dernireè entrée (BUG!!!!!!)
 			let numberArray = JSON.parse(localStorage.getItem(ID)).length;
-			console.log(JSON.parse(localStorage.getItem(ID)));
-			console.log(numberArray);
+
 			orderInCart = reqOrderExist;// on récupère l'array avec toutes les commandes pour cet ID
 
 		
 				for (let i in reqOrderExist) {//On vérifie si une couleur existe déjà dans tout le Array
-
-					console.log(reqOrderExist[i]);
 	
 					if(reqOrderExist[i].colors == customSelect){ // Si une couleure existe alors on renvoie true avec l'index du array
 						checkColorExist = true;
 						checkColorIndex = i;
-
-						//console.log(reqOrderExist[i].colors);
 					}
 				}
 				if(checkColorExist === true){ // On modifie le champ de la couleur
@@ -102,23 +97,17 @@ addToCart.addEventListener('click',async function (event) {
 					orderInCart[checkColorIndex] = newEntries; 
 
 					localStorage.setItem(ID, JSON.stringify(orderInCart)); //On envoie au panier
-
-					//console.log('Même couleure : '+ reqOrderExist[checkColorIndex].colors, newQuantity, customSelect );
 					
 				}
 				else{ // Si chekColor === false alors la couleur n'existe pas dans le array
 					orderInCart.push({colors: customSelect, quantity : qte}); //On ajoute à l'array toutes les commandes
 					localStorage.setItem(ID, JSON.stringify(orderInCart)); //On envoie au panier
-
-					//console.log('ajout nouvelle couleur : '+ reqOrderExist[checkColorIndex].colors, qte, customSelect);
 				}			
 			
 		}
 		else{
 			orderInCart.push({colors: customSelect, quantity : qte}); //On ajoute à l'array toutes les commandes
 			localStorage.setItem(ID, JSON.stringify(orderInCart)); //On envoie au panier
-
-			//console.log('Initialisation : '+ customSelect, qte);
 		}
 		
 	}
