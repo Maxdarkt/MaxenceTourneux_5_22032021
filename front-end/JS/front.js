@@ -1,25 +1,22 @@
-//--------------------Modif DOM-----------------------------------------//
-
+//--------------------Affichage des Teddies || Modification du DOM-----------------------------------------//
 var cartPrev = document.getElementsByClassName('cart-prev');
 
 async function displayListProducts() {
-    await productRequest();
+    await productRequest(); //Requete API
 
     let listOfProducts = '';
     
-    for (let nounours of nounourses){ //Split l'array pour que les couelurs reviennent à la  ligne en responsive
+    for (let nounours of nounourses){ //On déroule tout l'array pour placer les variables dans le HTML
         let colorsString = '';
-        for (let color of nounours.colors){
+        for (let color of nounours.colors){//Split l'array pour que les couleurs reviennent à la  ligne en responsive
             if(nounours.colors.length>1){
-                colorsString += color +', '; //Si plusieurs couleurs, on ajoute un espace après ,
+                colorsString += color +', '; //Si plusieurs couleurs, on ajoute un espace après la , => ex : "black, white, brown, ..."
             }
             else {
                 colorsString = color;
             }
-
-
         }
-        
+
         listOfProducts += `<div class="mb-3 bg-light height-row-index pt-3">
                                 <div class="row h-100">
                                         <div class="col-6 d-flex justify-content-center align-items-center">
@@ -41,11 +38,8 @@ async function displayListProducts() {
                                         </div>
                                 </div >
                         </div>`;
-        document.getElementById('cart-prev').innerHTML = listOfProducts;
     }
-        
-
-
+    document.getElementById('cart-prev').innerHTML = listOfProducts;
 }
 
 //-------------------Lancement de la fonction au chargement de la page -------------------------------//

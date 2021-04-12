@@ -1,16 +1,13 @@
-//---------Verif panier + Empecher de rafraichir la page
+//---------Verif panier + Empecher de faire des doublons de commande en rafraichissant la page
 urlRedirection = "./index.html";
 checkCart(urlRedirection);
 
-//------------------------Récupérer l'ID de la commande
-//-------------------------Recuperer l'ID de l'URL
+//------------------------Récupérer le numéro de la commande
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const numOrder = urlParams.get('_id');
 
 //---------------------Remerciements-------------
-
-//POrtabilité des variables
 
 //Poratbilité des variables
 let formName = "";
@@ -38,8 +35,8 @@ La commande n° ${numOrder} est bien en cours de préparation...`;
 
 document.getElementById('livraison-prev').innerHTML = `<strong>La livraison arrivera à l'adresse suivante :</strong><br/>${formLastName} ${formName}<br/>${formAddress}<br/>
 ${formCity}`;
-
 }
+
 //---déclaration svariables à trier avec front panier et uniformiser sur commun
 var panierHTML = "";
 var orderCart = [];
@@ -82,15 +79,11 @@ async function displayProductsOrder(){
         }
 }
 
-async function displayOrderConfirmation () {// Afficher la page et appel des différentes fonctions
-        await fillInformationsCustomer (numOrder);
-        await fillInformationsOrder ();
-        await displayProductsOrder();
-}
-
-async function main () {
-    await displayOrderConfirmation()
+async function displayOrderConfirmation() {
+    await fillInformationsCustomer (numOrder);
+    await fillInformationsOrder ();
+    await displayProductsOrder();
 } 
 
-main()
-.then(() => localStorage.clear());
+displayOrderConfirmation()
+.then(() => localStorage.clear());//on vide le localStorage une fois toutes les informations récupérées pour éviter des doublons de commande

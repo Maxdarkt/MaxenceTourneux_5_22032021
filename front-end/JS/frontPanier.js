@@ -57,20 +57,13 @@ function majCart(j, indexArray, ID, color, price) {//Mise a jour du panier : loc
 
     let difference = (newQte - response[indexArray].quantity) * price;
 
-    majSum(difference);
+    sumCart += difference;
+    document.getElementById('panier-Sum').innerHTML = sumCart.toFixed(2) + ' EUR ';
     response[indexArray] = {colors : color, quantity: newQte};
     localStorage.setItem(ID, JSON.stringify(response));
 }
 
-function majSum(diff) {//Mise a jour du montant de commande
-
-    sumCart += diff;
-    document.getElementById('panier-Sum').innerHTML = sumCart.toFixed(2) + ' EUR ';
-
-
-};
-
-function checkLocalStorage(){//vérifier le panier pour des sredirections de page
+function checkLocalStorage(){//vérifier le panier pour des redirections de page
     if (localStorage.length == 0) {
         document.location.href = "./index.html";
     }
@@ -82,13 +75,13 @@ function checkLocalStorage(){//vérifier le panier pour des sredirections de pag
 function removeToCart(j, indexArray, ID, color) {//Supprimer un produit du panier
     let ordersLocal = JSON.parse(localStorage.getItem(ID));
 
-    if(ordersLocal.length == 1){//si localStorage contient 1 seule entrée
+    if(ordersLocal.length == 1){//si le teddy contient 1 seule couleur
 
-        localStorage.removeItem(ID); //on supprime le localStorage complètement
+        localStorage.removeItem(ID); //on supprime la commande complète avec l'ID
 
         checkLocalStorage();
     }
-    else if(ordersLocal.length > 1){//si localStorage contient plusieurs entrées
+    else if(ordersLocal.length > 1){//si le teddy contient plusieurs couleurs en commandes
         let newOrderAfterDeleteOne = [];
         for (let element of Object.keys(ordersLocal)){//On récupère l'index pour comparer :
 
@@ -102,13 +95,11 @@ function removeToCart(j, indexArray, ID, color) {//Supprimer un produit du panie
         document.location.href = "./panier.html";//On recharge la page
     }
     else{
-        console.error('erreure');
+        console.error(error);
     }
-
 }
 
 //----------------Vider panier----------------------------
-
 var clearCart = document.getElementById('clear-Cart');
 
 clearCart.addEventListener('click', function (event) {
@@ -154,7 +145,7 @@ function checkForm(){
 
     if (regexNom.test(formName) && regexNom.test(formLastName) && regexEmail.test(formEmail) && regexTel.test(formTel) && regexText.test(formRue) && regexPostal.test(formPostal) && regexCompl.test(formCompl) && regexVille.test(formVille)  ) {
 
-        if(formEmail === formEmailConf){
+        if(formEmail === formEmailConf){//Si l'email = email conf
 
             return true;
 
@@ -165,25 +156,25 @@ function checkForm(){
 
     }
     else {
-        alert(`Le formulaire présente une erreure !`);
+        alert(`Le formulaire présente une erreure !`);//Si une regex est false
         return false;
     }
 }
 
-function getlocalStorageForSendAPI() {
+function getLocalStorageForSendAPI() {//On récupère les ID du localStorage à envoyer en commande à l'API
     let productsId = [];
-    for (let i in nounourses) {
-       if(localStorage.getItem(nounourses[i]._id)){
-        productsId.push(nounourses[i]._id);
+    for (let i in nounourses) {//Pour chaque Teddy
+       if(localStorage.getItem(nounourses[i]._id)){//Si l'id du teddy est dans le localStorage (panier)
+        productsId.push(nounourses[i]._id);//alors on le met dans l'array pour commander
        } 
     }
-    return productsId
+    return productsId //on retourne l'array
 }
 
-function validateCart(event) {
+function validateCart(event) {//Validation de la commande
     event.preventDefault();
 
-    let checkFormVar = checkForm();
+    let checkFormVar = checkForm(); //On vérifie le formulaire
 
     if (checkFormVar) {//Si la fonction a renvoyé = true
         //création d'un objet
@@ -191,11 +182,11 @@ function validateCart(event) {
 
         let customerDetails = {firstName : formName, lastName : formLastName, email : formEmail, address : formRue, city : city};
 
-        let productsId = getlocalStorageForSendAPI ();
+        let productsId = getLocalStorageForSendAPI ();
 
         let orderId = "";
 
-        fetch('http://localhost:3000/api/teddies/order', {
+        fetch('http://localhost:3000/api/teddies/order', { //On envoie la commande à l'API
             method: "POST",
             headers: {"Content-type": "application/json; charset=UTF-8"},
             body: JSON.stringify({contact: customerDetails, products: productsId})
@@ -203,11 +194,10 @@ function validateCart(event) {
         .then(response => response.json())
         .then( function(results) {
             orderId = results.orderId;
-            localStorage.setItem(orderId, JSON.stringify(customerDetails));//envoie au local Storage
+            localStorage.setItem(orderId, JSON.stringify(customerDetails));//envoie au local Storage les infos du formulaire + le numéro de commande (donnée de l'API)
 
-            document.location.href = `./commande.html?_id=${orderId}` ;
+            document.location.href = `./commande.html?_id=${orderId}` ;//on envoie le numéro de commande dans l'url
         })
         .catch(error => console.log(error));
     }
-    
 };
