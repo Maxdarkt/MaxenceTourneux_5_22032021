@@ -47,13 +47,7 @@ async function displayCart(){
         }
 }
 
- 
-
-
 displayCart();
-
-
-
 
 //-----------------D�claration requ�te
 
@@ -137,7 +131,7 @@ clearCart.addEventListener('click', function (event) {
     let formPostal = 0;
     let formVille = "";
 
-//--Vérification dui formulaire : REGEX
+//--Vérification du formulaire : REGEX
 function checkForm(){
     formName = document.getElementById('form-Name').value;
     formLastName = document.getElementById('form-Lastname').value;
@@ -176,6 +170,16 @@ function checkForm(){
     }
 }
 
+function getlocalStorageForSendAPI() {
+    let productsId = [];
+    for (let i in nounourses) {
+       if(localStorage.getItem(nounourses[i]._id)){
+        productsId.push(nounourses[i]._id);
+       } 
+    }
+    return productsId
+}
+
 function validateCart(event) {
     event.preventDefault();
 
@@ -183,13 +187,27 @@ function validateCart(event) {
 
     if (checkFormVar) {//Si la fonction a renvoyé = true
         //création d'un objet
-        let customerDetails = {name : formName, lastname : formLastName, email : formEmail, tel : formTel, rue : formRue, compl : formCompl, postal : formPostal, ville : formVille};
+        let city = formPostal + ' - ' + formVille;
 
-        let idOrder = Date.now();//création d'un id de commande unique
+        let customerDetails = {firstName : formName, lastName : formLastName, email : formEmail, address : formRue, city : city};
 
-        localStorage.setItem(idOrder, JSON.stringify(customerDetails));//envoie au local Storage
+        let productsId = getlocalStorageForSendAPI ();
 
-        document.location.href = "./commande.html?_id=" +idOrder ;
+        let orderId = "";
+
+        fetch('http://localhost:3000/api/teddies/order', {
+            method: "POST",
+            headers: {"Content-type": "application/json; charset=UTF-8"},
+            body: JSON.stringify({contact: customerDetails, products: productsId})
+        })
+        .then(response => response.json())
+        .then( function(results) {
+            orderId = results.orderId;
+            localStorage.setItem(orderId, JSON.stringify(customerDetails));//envoie au local Storage
+
+            document.location.href = `./commande.html?_id=${orderId}` ;
+        })
+        .catch(error => console.log(error));
     }
     
 };

@@ -100,13 +100,13 @@ addToCart.addEventListener('click',async function (event) {
 					
 				}
 				else{ // Si chekColor === false alors la couleur n'existe pas dans le array
-					orderInCart.push({colors: customSelect, quantity : qte}); //On ajoute à l'array toutes les commandes
+					orderInCart.push({colors: customSelect, quantity : parseInt(qte)}); //On ajoute à l'array toutes les commandes
 					localStorage.setItem(ID, JSON.stringify(orderInCart)); //On envoie au panier
 				}			
 			
 		}
 		else{
-			orderInCart.push({colors: customSelect, quantity : qte}); //On ajoute à l'array toutes les commandes
+			orderInCart.push({colors: customSelect, quantity : parseInt(qte)}); //On ajoute à l'array toutes les commandes
 			localStorage.setItem(ID, JSON.stringify(orderInCart)); //On envoie au panier
 		}
 		

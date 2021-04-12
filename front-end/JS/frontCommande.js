@@ -7,6 +7,7 @@ checkCart(urlRedirection);
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const numOrder = urlParams.get('_id');
+
 //---------------------Remerciements-------------
 
 //POrtabilité des variables
@@ -15,26 +16,19 @@ const numOrder = urlParams.get('_id');
 let formName = "";
 let formLastName = "";
 let formEmail = "";
-let formEmailConf = "";
-let formTel = 0;
 
-let formRue = "";
-let formCompl = "" ;
-let formPostal = 0;
-let formVille = "";
+let formCity = "";
+let formAddress = "";
 
 function fillInformationsCustomer (numOrder){ //On renseigne les variables avec les données du localStorage
     let dataOrder = JSON.parse(localStorage.getItem(numOrder));
 
-    formName = dataOrder.name;
-    formLastName = dataOrder.lastname;
+    formName = dataOrder.firstName;
+    formLastName = dataOrder.lastName;
     formEmail = dataOrder.email;
-    formTel = dataOrder.tel;
 
-    formRue = dataOrder.rue;
-    formCompl = dataOrder.compl;
-    formPostal = dataOrder.postal;
-    formVille = dataOrder.ville;
+    formAddress = dataOrder.address;
+    formCity = dataOrder.city;
 }
 
 function fillInformationsOrder (){ //Récupérer les produits validés dans le localStorage
@@ -42,8 +36,8 @@ function fillInformationsOrder (){ //Récupérer les produits validés dans le l
 document.getElementById('num-order').innerHTML = `<strong>${formName}</strong>, nous vous remercions pour votre confiance !<br/>
 La commande n° ${numOrder} est bien en cours de préparation...`;
 
-document.getElementById('livraison-prev').innerHTML = `<strong>La livraison arrivera à l'adresse suivante :</strong><br/>${formLastName} ${formName}<br/>${formRue}<br/>${formCompl}<br/>${formPostal}<br/>
-${formVille}`;
+document.getElementById('livraison-prev').innerHTML = `<strong>La livraison arrivera à l'adresse suivante :</strong><br/>${formLastName} ${formName}<br/>${formAddress}<br/>
+${formCity}`;
 
 }
 //---déclaration svariables à trier avec front panier et uniformiser sur commun
@@ -88,16 +82,15 @@ async function displayProductsOrder(){
         }
 }
 
-function displayOrderConfirmation () {// Afficher la page et appel des différentes fonctions
-    fillInformationsCustomer (numOrder);
-    fillInformationsOrder ();
-    displayProductsOrder();
+async function displayOrderConfirmation () {// Afficher la page et appel des différentes fonctions
+        await fillInformationsCustomer (numOrder);
+        await fillInformationsOrder ();
+        await displayProductsOrder();
 }
 
-displayOrderConfirmation ()
+async function main () {
+    await displayOrderConfirmation()
+} 
 
-//on vide le panier
-setTimeout(function() {
-    localStorage.clear();
-}, 2500);
-
+main()
+.then(() => localStorage.clear());
